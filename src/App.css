@@ -42,9 +42,21 @@
   margin: 0 2px;
   background-color: #2c67ce;
   border-radius: 3px;
-  width: 40px;
+  width: 35px;
   /* transition: all 0.3s ease-in; */
 }
+.bar-label{
+  position: absolute;
+  bottom: -20px;
+}
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
 
 .highlight {
   background-color: rgb(143, 17, 131);
@@ -108,4 +120,9 @@
   /* box-shadow: rgba(60, 100, 67, 0.183) 0px 5px 8px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
   transition: all 0.1s ease-in;
   margin-left: 10px;
+}
+
+a {
+  text-align: center;
+  text-decoration: none;
 }

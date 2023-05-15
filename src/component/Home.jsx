@@ -8,24 +8,52 @@ import quicksort from "../sortings/quick.js";
 const Home = () => {
 
   const [userBars, setUserBars] = useState("");
-  const [resetVal, setResetVal] = useState([10, 40, 50, 60, 20, 70, 40, 30, 100]);
+  const [resetVal, setResetVal] = useState(() => Array.from({ length: 20 }, () => Math.floor(Math.random() * 250) + 20));
+
   const [isReset, setIsReset] = useState(true);
   const [isSorted, setIsSorted] = useState(false);
 
   const userArr = userBars.split(",");
 
   const barValues = isReset ? resetVal : userArr
+  
 
+  // const resetBars = () => {
+  //   const barwrapper = document.querySelectorAll(".bar-wrapper")
+  //   const bars = document.querySelectorAll(".bar");
+  //   const nums = document.querySelectorAll(".bar-label");
+  //   barwrapper.forEach((comp) => {
+  //    const height = Math.floor(Math.random() * 250) + 20;
+  //    comp.style.height = `${height}px`;
+  //   })
+  //   // bars.forEach((bar) => {
+  //   //   const height = Math.floor(Math.random() * 250) + 20;
+  //   //   bar.style.height = `${height}px`;
+  //   // }); 
   const resetBars = () => {
-    const bars = document.querySelectorAll(".bar");
-    bars.forEach((bar) => {
-      const height = Math.floor(Math.random() * 181) + 20;
-      bar.style.height = `${height}px`;
-    }); 
-
     setIsReset(true);
-    setUserBars("");    
+    const bars = document.querySelectorAll(".bar");
+    const heights = Array.from(bars).map(() => Math.floor(Math.random() * 250) + 20);
+    
+    bars.forEach((bar, index) => {
+      bar.style.height = `${heights[index]}px`;
+      // Remove any existing bar labels
+      const existingBarLabel = bar.querySelector(".bar-label");
+      if (existingBarLabel) {
+        existingBarLabel.remove();
+      }
+      // Create and append the new bar label
+      const barLabel = document.createElement("div");
+      barLabel.className = "bar-label";
+      barLabel.innerText = `${heights[index]}`;
+      bar.appendChild(barLabel);
+    });
+    
+    setUserBars("");
+    
   };
+  
+  
 
   const setCumtomBars = () => {
     // const bars = document.querySelectorAll(".bar");
@@ -36,6 +64,18 @@ const Home = () => {
 
     setIsReset(false);
   }
+  const handleChange = (e) => {
+    const { value } = e.target;
+    if (value === "") {
+      setResetVal([]);
+    } else {
+      const newBars = [...resetVal];
+      const index = parseInt(e.target.name);
+      newBars[index] = parseInt(value);
+      setResetVal(newBars);
+    }
+  };
+  
 
   return (
     <div className="home">
@@ -52,9 +92,13 @@ const Home = () => {
         <div className="bar"></div> */}
         {
           barValues.map((bars, idx) => (
-            <div className="bar" style={{height: `${bars}px`}}></div>
+            <div className="bar-wrapper" key={idx}>
+              <div className="bar" style={{ height: `${bars}px` }}></div>
+              <div className="bar-label">{bars}</div>
+            </div>
           ))
         }
+        
       </div>
 
       <div className="home__custom">
@@ -70,8 +114,7 @@ const Home = () => {
         <button className="button" onClick={() => bubbleSort()}>Bubble Sort</button>
         <button className="button" onClick={() => mergeSorting()}>Merge Sort</button>
         <button className="button" onClick={() => quicksort()}>Quick Sort</button>
-        <button className="button" onClick={() => resetBars()} disabled={isSorted}>Reset</button>
-
+        <a href={window.location.href} className="button" onClick={() => resetBars()} disabled={isSorted}>Reset</a>
       </div>  
 
       

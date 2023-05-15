@@ -2,6 +2,7 @@ import "../styles/bubble.css";
 
 const selectionSort = async() => {
     let bars = document.querySelectorAll('.bar');
+    let barLabels = document.querySelectorAll(".bar-label");
     
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -19,6 +20,11 @@ const selectionSort = async() => {
       }
       bars[j].classList.remove('highlight');
     }
+    // Update the innerText of the bar-label divs
+    let tempLabel = barLabels[minIdx].innerText;
+    barLabels[minIdx].innerText = barLabels[i].innerText;
+    barLabels[i].innerText = tempLabel;
+    
     let temp = bars[minIdx].style.height;
     bars[minIdx].style.height = bars[i].style.height;
     bars[i].style.height = temp;

@@ -1,5 +1,6 @@
 const mergeSorting = async () => {
   let bars = document.querySelectorAll(".bar");
+  let barLabels = document.querySelectorAll(".bar-label");
 
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -38,9 +39,11 @@ const mergeSorting = async () => {
     while (i < n1 && j < n2) {
       if (L[i] <= R[j]) {
         bars[k].style.height = L[i] + "px";
+        barLabels[k].innerText = L[i];
         i++;
       } else {
         bars[k].style.height = R[j] + "px";
+        barLabels[k].innerText = R[j];
         j++;
       }
       bars[k].classList.add("highlight");
@@ -50,6 +53,7 @@ const mergeSorting = async () => {
     }
     while (i < n1) {
       bars[k].style.height = L[i] + "px";
+      barLabels[k].innerText = L[i];
       bars[k].classList.add("highlight");
       await sleep(100);
       bars[k].classList.remove("highlight");
@@ -58,6 +62,7 @@ const mergeSorting = async () => {
     }
     while (j < n2) {
       bars[k].style.height = R[j] + "px";
+      barLabels[k].innerText = R[j];
       bars[k].classList.add("highlight");
       await sleep(100);
       bars[k].classList.remove("highlight");

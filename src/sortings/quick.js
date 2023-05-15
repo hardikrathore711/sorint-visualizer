@@ -1,6 +1,6 @@
 const quicksort = async () => {
 let bars = document.querySelectorAll(".bar");
-
+let barLabels = document.querySelectorAll(".bar-label");
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -25,9 +25,11 @@ let bars = document.querySelectorAll(".bar");
           if (parseInt(bars[j].style.height) < pivotValue) {
             i++;
             await swap(bars[i], bars[j]);
+            await swapLabels(barLabels[i], barLabels[j]);
           }
         }
         await swap(bars[i + 1], bars[pivotIndex]);
+        await swapLabels(barLabels[i + 1], barLabels[pivotIndex]);
         bars[pivotIndex].classList.remove('highlight');
         return i + 1;
       }
@@ -35,6 +37,11 @@ let bars = document.querySelectorAll(".bar");
         const temp = a.style.height;
         a.style.height = b.style.height;
         b.style.height = temp;
+      }
+      async function swapLabels(a, b) {
+        const temp = a.innerText;
+        a.innerText = b.innerText;
+        b.innerText = temp;
         await sleep(100);
       }
       quickSort(0, bars.length - 1);
